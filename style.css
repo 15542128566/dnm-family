@@ -1,0 +1,347 @@
+/* ========== 全局样式 ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: #e8e8e8;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ========== 顶部菜单栏 ========== */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(15, 12, 41, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.brand-logo {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ff6b6b;
+    letter-spacing: 2px;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4ecdc4;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #aaa;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+.nav-item:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-item.active {
+    color: #fff;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.35);
+}
+
+/* ========== 主内容区 ========== */
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+.page {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-subtitle {
+    font-size: 15px;
+    color: #888;
+    margin-bottom: 32px;
+}
+
+/* ========== 成员列表（核心：Flex + hover 放大）========== */
+.member-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.member-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 28px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    cursor: pointer;
+    /* 关键：flex-grow 默认 0，hover 时变大实现高度动画 */
+    flex-grow: 0;
+    transition: flex-grow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                padding 0.35s ease,
+                background 0.3s ease,
+                border-color 0.3s ease,
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.member-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0), rgba(78, 205, 196, 0));
+    transition: background 0.4s ease;
+    pointer-events: none;
+}
+
+.member-card:hover {
+    flex-grow: 1;           /* 悬停时占据更多垂直空间 */
+    padding: 28px 36px;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 107, 107, 0.5);
+    transform: translateX(4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 107, 107, 0.2);
+    z-index: 10;
+}
+
+.member-card:hover::before {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.12), rgba(78, 205, 196, 0.12));
+}
+
+/* 让悬停时内部元素按内容"展开" */
+.member-card .member-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.3s ease;
+}
+
+.member-card:hover .member-details {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 12px;
+}
+
+/* ---------- 头像 ---------- */
+.member-avatar {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.member-card:hover .member-avatar {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 8px 30px rgba(255, 107, 107, 0.5);
+}
+
+/* 图片头像：填满容器、圆形裁剪 */
+.member-avatar-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+/* ---------- 基础信息区 ---------- */
+.member-info {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.member-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.member-id {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.member-tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(78, 205, 196, 0.15);
+    color: #4ecdc4;
+    font-weight: 500;
+}
+
+.member-brief {
+    font-size: 14px;
+    color: #bbb;
+    margin-top: 4px;
+}
+
+/* ---------- 展开的详细信息 ---------- */
+.member-details {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: #cfcfcf;
+    margin-top: 6px;
+}
+
+.detail-label {
+    flex-shrink: 0;
+    color: #4ecdc4;
+    font-weight: 600;
+    min-width: 56px;
+}
+
+.detail-games {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.game-chip {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.15));
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ========== 占位页面 ========== */
+.placeholder-box {
+    text-align: center;
+    padding: 80px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    color: #888;
+    font-size: 16px;
+}
+
+/* ========== 页脚 ========== */
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: #666;
+    font-size: 13px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 14px 20px;
+    }
+
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-item {
+        padding: 8px 14px;
+        font-size: 14px;
+    }
+
+    .member-card {
+        padding: 16px 20px;
+        gap: 16px;
+    }
+
+    .member-card:hover {
+        padding: 20px 24px;
+    }
+
+    .member-avatar {
+        width: 56px;
+        height: 56px;
+        font-size: 20px;
+    }
+
+    .page-title {
+        font-size: 26px;
+    }
+}
