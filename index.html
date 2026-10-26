@@ -16,6 +16,7 @@
         <nav class="nav-menu">
             <a href="#" class="nav-item active" data-page="members">人物介绍</a>
             <a href="#" class="nav-item" data-page="games">团队游戏</a>
+            <a href="#" class="nav-item" data-page="honor">荣誉墙</a>
             <a href="#" class="nav-item" data-page="gallery">精彩瞬间</a>
             <a href="#" class="nav-item" data-page="about">关于我们</a>
         </nav>
@@ -33,10 +34,16 @@
         <!-- 团队游戏页面 -->
         <section id="page-games" class="page">
             <h2 class="page-title">团队游戏</h2>
-            <p class="page-subtitle">敬请期待我们的游戏库</p>
-            <div class="placeholder-box">
-                <span>🎮 更多游戏内容即将上线</span>
-            </div>
+            <p class="page-subtitle">我们常玩的游戏，点击选项卡查看擅长选手</p>
+            <div id="games-tabs" class="game-tabs"></div>
+            <div id="games-panel" class="game-panel"></div>
+        </section>
+
+        <!-- 荣誉墙页面 -->
+        <section id="page-honor" class="page">
+            <h2 class="page-title">荣誉墙</h2>
+            <p class="page-subtitle">每一场战斗都值得被铭记</p>
+            <div id="honor-list" class="honor-list"></div>
         </section>
 
         <!-- 精彩瞬间页面 -->
