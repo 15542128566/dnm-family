@@ -17,6 +17,7 @@
             <a href="#" class="nav-item active" data-page="members">人物介绍</a>
             <a href="#" class="nav-item" data-page="games">团队游戏</a>
             <a href="#" class="nav-item" data-page="honor">荣誉墙</a>
+            <a href="#" class="nav-item" data-page="footprint">足迹</a>
             <a href="#" class="nav-item" data-page="gallery">精彩瞬间</a>
             <a href="#" class="nav-item" data-page="about">关于我们</a>
         </nav>
@@ -46,6 +47,19 @@
             <div id="honor-list" class="honor-list"></div>
         </section>
 
+        <!-- 足迹页面 -->
+        <section id="page-footprint" class="page">
+            <h2 class="page-title">足迹</h2>
+            <p class="page-subtitle">我们生活的地方，我们一起走过的山与海</p>
+            <div class="map-legend">
+                <span class="legend-item"><i class="legend-dot legend-home"></i>常驻基地</span>
+                <span class="legend-item"><i class="legend-dot legend-trip"></i>旅游足迹</span>
+            </div>
+            <div class="map-wrapper">
+                <div id="china-map" class="china-map"></div>
+            </div>
+        </section>
+
         <!-- 精彩瞬间页面 -->
         <section id="page-gallery" class="page">
             <h2 class="page-title">精彩瞬间</h2>
@@ -69,6 +83,8 @@
         <p>&copy; 2026 DNM Family · 一起玩才好玩</p>
     </footer>
 
+    <script src="lib/echarts.min.js"></script>
+    <script src="map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
