@@ -148,6 +148,79 @@ const honors = [
     { abbr: 'TR5', full: '第一届羽毛球Solo大赛', champion: 'NENG', runnerUp: 'VLON', third: 'DNMZ' }
 ];
 
+/* ---------- 精彩瞬间视频数据 ---------- */
+// cover: 封面图片路径（放至 cover_images/ 文件夹，命名 xxx_cover.png）
+// date : 视频时间（YYYY-MM-DD，卡片按此倒序排列）
+// desc : 视频简介；url: 点击卡片跳转的视频链接
+const videos = [
+    {
+        cover: 'cover_images/20260517_cover.png',
+        date: '2026-05-17',
+        desc: '【DOTA2精彩时刻】--张哥火女狗神小黑双双拿下暴走！',
+        url: 'https://www.bilibili.com/video/BV1B8Lj6DEsK/?spm_id_from=333.1387.search.video_card.click&vd_source=144015426fb1533a9d07379fc03d689a'
+    },
+    {
+        cover: 'cover_images/20260505_cover.png',
+        date: '2026-05-05',
+        desc: '【彩六精彩时刻】张哥Mute一发C4三杀',
+        url: 'https://www.bilibili.com/video/BV1NvRyBzEUo/?spm_id_from=333.1387.search.video_card.click'
+    },
+    {
+        cover: 'cover_images/20260321_cover.png',
+        date: '2026-03-21',
+        desc: '【彩六精彩时刻】围攻杯夺冠',
+        url: 'https://bilibili.com/video/BV1wiAAzTEBG/?spm_id_from=333.1387.collection.video_card.click'
+    },
+    {
+        cover: 'cover_images/20260126_cover.png',
+        date: '2026-01-26',
+        desc: '【彩六精彩时刻】伟哥DOC五杀',
+        url: 'https://bilibili.com/video/BV1NLzvBqEWk/?spm_id_from=333.1387.search.video_card.click'
+    },
+    {
+        cover: 'cover_images/20260122_cover.png',
+        date: '2026-01-22',
+        desc: '【彩六精彩时刻】姚aruni五杀',
+        url: 'https://www.bilibili.com/video/BV1fWBfBsEAQ/?spm_id_from=333.1387.search.video_card.click'
+    },
+    {
+        cover: 'cover_images/20260121_cover.png',
+        date: '2026-01-21',
+        desc: '【彩六精彩时刻】张哥echo五杀',
+        url: 'https://www.bilibili.com/video/BV13tz7BvEbY/?spm_id_from=333.1387.search.video_card.click'
+    },
+    {
+        cover: 'cover_images/20251227_cover.png',
+        date: '2025-12-27',
+        desc: '【彩六精彩时刻】张哥枪盾五杀',
+        url: 'https://www.bilibili.com/video/BV1mPBBBmEne/?spm_id_from=333.1387.search.video_card.click'
+    },
+    {
+        cover: 'cover_images/20251206_cover.png',
+        date: '2025-12-06',
+        desc: '【彩六精彩时刻】伟哥电车五杀',
+        url: 'https://www.bilibili.com/video/BV1gF2dB9EMB/?spm_id_from=333.1387.search.video_card.click&vd_source=144015426fb1533a9d07379fc03d689a'
+    },
+    {
+        cover: 'cover_images/20251103_cover.png',
+        date: '2025-11-30',
+        desc: '【彩六精彩时刻】伟哥男鬼五杀',
+        url: 'https://www.bilibili.com/video/BV1paSTBEEX6/?spm_id_from=333.1387.search.video_card.click&vd_source=144015426fb1533a9d07379fc03d689a'
+    },
+    {
+        cover: 'cover_images/20250928_cover.png',
+        date: '2025-09-28',
+        desc: '【彩六精彩时刻】作哥电爪五杀',
+        url: 'https://www.bilibili.com/video/BV14MnfzyECx/?spm_id_from=333.1387.search.video_card.click&vd_source=144015426fb1533a9d07379fc03d689a'
+    },
+    {
+        cover: 'cover_images/20250602_cover.png',
+        date: '2025-06-02',
+        desc: '【彩六精彩时刻】姚edd五杀',
+        url: 'https://www.bilibili.com/video/BV1Pv7DzVE7S/?spm_id_from=333.1387.search.video_card.click&vd_source=144015426fb1533a9d07379fc03d689a'
+    }
+];
+
 /* ---------- 菜单页面切换 ---------- */
 function initNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
@@ -287,6 +360,24 @@ function renderHonors() {
     `).join('');
 }
 
+/* ---------- 精彩瞬间视频卡片渲染（按时间倒序） ---------- */
+function renderVideos() {
+    const list = document.getElementById('video-list');
+    if (!list) return;
+
+    const sorted = [...videos].sort((a, b) => b.date.localeCompare(a.date));
+    list.innerHTML = sorted.map(v => `
+        <a class="video-card" href="${v.url}" target="_blank" rel="noopener noreferrer">
+            <div class="video-cover">
+                <img src="${v.cover}" alt="视频封面" onerror="this.closest('.video-cover').classList.add('cover-missing'); this.remove()">
+                <span class="video-play">▶</span>
+            </div>
+            <div class="video-desc">${v.desc}</div>
+            <div class="video-meta">${v.date}</div>
+        </a>
+    `).join('');
+}
+
 /* ---------- 工具函数 ---------- */
 
 // 根据成员 ID 查专属颜色
@@ -317,5 +408,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMembers();
     renderGames();
     renderHonors();
+    renderVideos();
     console.log('🎮 DNM Family 网站已加载！');
 });
