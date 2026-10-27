@@ -59,7 +59,7 @@ const footprintData = {
             time: '2015年10月',
             color: '#ff6b6b',
             spots: '兵马俑、回民街、大唐不夜城、西安城墙',
-            story: '西安城墙租自行车狂飙，差点把兄弟甩进护城河；夜爬华山，凌晨山顶抱团取暖闻屁续命，看日出时全员感动落泪（冻的）。'
+            story: '西安城墙租自行车狂飙，夜爬华山半夜山顶抱团闻屁，导演连夜坐火车回成都跑了个一千米再回来。'
         },
         {
             province: '山东省',
@@ -67,7 +67,7 @@ const footprintData = {
             time: '2016年10月',
             color: '#ff9f43',
             spots: '五四广场、索尼克主题室内公园',
-            story: '五四青年公园打卡，反向坐公交越坐人越少；在索尼克主题室内公园创造了无数笑点——"我仍然在瞄准"、"我先去厕所吐一会儿"、"积分刷到第一但是兑奖时间过了"。'
+            story: '五四青年公园打卡，反向坐公交越坐人越少；索尼克主题室内公园："我仍然在瞄准"、"我先去厕所吐一会儿"、"积分刷到第一但是兑奖时间过了"。'
         },
         {
             province: '四川省',
@@ -149,6 +149,11 @@ async function initFootprintMap() {
     try {
         const resp = await fetch('data/china.json');
         const chinaJson = await resp.json();
+        // 移除南海诸岛板块，仅展示陆地部分
+        chinaJson.features = chinaJson.features.filter(f => {
+            const name = f.properties && f.properties.name;
+            return name && name !== '南海诸岛';
+        });
         echarts.registerMap('china', chinaJson);
     } catch (e) {
         el.innerHTML = '<p style="color:#888;text-align:center;padding:60px 0;">地图数据加载失败：' + e.message + '</p>';
@@ -235,7 +240,8 @@ async function initFootprintMap() {
             type: 'map',
             map: 'china',
             roam: true,               // 支持缩放拖动
-            zoom: 1.15,
+            zoom: 1.55,               // 再次放大
+            center: [103.8, 36.3],    // 以中国陆地几何中心为地图中心，陆地居中显示
             scaleLimit: { min: 0.8, max: 3 },
             selectedMode: false,
             itemStyle: {
